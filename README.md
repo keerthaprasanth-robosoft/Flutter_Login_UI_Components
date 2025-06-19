@@ -32,8 +32,8 @@ This is my **first full Flutter application**, built using **Dart**. The app dem
 
 - **Framework:** Flutter
 - **Language:** Dart
-- **Architecture:** MVVM pattern (if applicable)
-- **State Management:** Provider (or specify what was used)
+- **Architecture:** MVVM pattern
+- **State Management:** Provider
 - **HTTP:** `http` package for API requests
 
 ---
@@ -46,8 +46,8 @@ POST https://dummyjson.com/auth/login
 
 Sample Credentials
 
-Username: emilys
-Password: emilyspass
+- Username: emilys
+- Password: emilyspass
 
 ### Users API
 GET https://dummyjson.com/users
@@ -59,6 +59,10 @@ GET https://dummyjson.com/products
 
 📽️ 
 
+https://github.com/user-attachments/assets/c79dc2a4-0fc9-4482-ba6b-cfd3a09c57eb
+
+
+
 ## 🙌 **Acknowledgments**
-https://dummyjson.com/ — for providing free mock APIs.
+[DummyJSON](https://dummyjson.com) — for providing free mock APIs.
 
