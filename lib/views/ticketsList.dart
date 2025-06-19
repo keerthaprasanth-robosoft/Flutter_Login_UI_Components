@@ -27,12 +27,15 @@ class _TicketsListScreenState extends State<TicketsListScreen> {
   void initState() {
     super.initState();
     tickets = AppSession().getProducts();
-    filteredTickets = tickets != null
-        ? tickets!
-            .where((ticket) =>
-                ticket.category?.toLowerCase() == widget.category.toLowerCase())
-            .toList()
-        : [];
+    if (widget.category != '') {
+      tickets = tickets!
+          .where((ticket) =>
+              ticket.category?.toLowerCase() == widget.category.toLowerCase())
+          .toList();
+      filteredTickets = tickets;
+    } else {
+      filteredTickets = tickets;
+    }
   }
 
   // Method to filter tickets based on priority
@@ -184,7 +187,7 @@ class _TicketsListScreenState extends State<TicketsListScreen> {
               })
           : const Center(
               child: Text(
-                'No tickets found',
+                'No Products found',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),

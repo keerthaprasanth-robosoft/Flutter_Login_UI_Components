@@ -8,6 +8,7 @@ import 'package:flutter_test_project/views/ticketsList.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:flutter_test_project/view_models/login_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_test_project/models/ticketsModel/appSession.dart';
 
 void main() {
   runApp(MyApp());
@@ -119,7 +120,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TicketsListScreen(category: 'Products')),
+                      builder: (context) => TicketsListScreen(category: '')),
                 ),
               ),
               SidebarXItem(
@@ -159,13 +160,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     'Groceries',
                     'Furniture'
                   ];
-                  final List<int> counts = [
-                    widget.loginResponse.dashboard?.totalTicket ?? 0,
-                    widget.loginResponse.dashboard?.ticketOpen ?? 0,
-                    widget.loginResponse.dashboard?.ticketClose ?? 0,
-                    0, // Adjust if you have an in-progress ticket count
-                  ];
-
+                  final List<int> counts = labels.map((label) {
+                    return AppSession().getProducts()
+                            ?.where((product) => product.category == label)
+                            .length ?? 0;
+                  }).toList();
                   return InkWell(
                     onTap: () {
                       Navigator.push(
