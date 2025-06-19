@@ -1,51 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_project/models/ticketsModel/appSession.dart';
-import 'package:flutter_test_project/models/ticketsModel/products_response.dart';
+import 'package:flutter_test_project/models/productsModel/appSession.dart';
+import 'package:flutter_test_project/models/productsModel/products_response.dart';
 import 'package:flutter_test_project/components/colors.dart';
 import 'package:flutter_test_project/components/text_styles.dart';
-import 'package:flutter_test_project/view_models/ticket_details_view_model.dart';
-import 'package:flutter_test_project/views/ticket_details_screen.dart';
-import 'package:provider/provider.dart';
 
-class TicketsListScreen extends StatefulWidget {
+class ProductsListScreen extends StatefulWidget {
   final String category;
-  const TicketsListScreen({
-    super.key, 
+  const ProductsListScreen({
+    super.key,
     required this.category,
   });
 
   @override
-  State<TicketsListScreen> createState() => _TicketsListScreenState();
+  State<ProductsListScreen> createState() => _ProductsListScreenState();
 }
 
-class _TicketsListScreenState extends State<TicketsListScreen> {
-  List<Product>? tickets;
-  List<Product>? filteredTickets;
+class _ProductsListScreenState extends State<ProductsListScreen> {
+  List<Product>? products;
+  List<Product>? filteredProducts;
   String selectedPriority = 'all';
 
   @override
   void initState() {
     super.initState();
-    tickets = AppSession().getProducts();
+    products = AppSession().getProducts();
     if (widget.category != '') {
-      tickets = tickets!
+      products = products!
           .where((ticket) =>
               ticket.category?.toLowerCase() == widget.category.toLowerCase())
           .toList();
-      filteredTickets = tickets;
+      filteredProducts = products;
     } else {
-      filteredTickets = tickets;
+      filteredProducts = products;
     }
   }
 
-  // Method to filter tickets based on priority
-  void filterTickets(String priority) {
+  // Method to filter products based on priority
+  void filterProducts(String priority) {
     setState(() {
       selectedPriority = priority;
       if (priority == 'all') {
-        filteredTickets = tickets;
+        filteredProducts = products;
       } else {
-        filteredTickets = tickets
+        filteredProducts = products
             ?.where((ticket) => ticket.availabilityStatus == priority)
             .toList();
       }
@@ -66,7 +63,7 @@ class _TicketsListScreenState extends State<TicketsListScreen> {
         ),
         actions: [
           PopupMenuButton<String>(
-            onSelected: (value) => filterTickets(value),
+            onSelected: (value) => filterProducts(value),
             icon: const Icon(Icons.filter_list),
             itemBuilder: (context) => [
               PopupMenuItem(
@@ -121,24 +118,24 @@ class _TicketsListScreenState extends State<TicketsListScreen> {
           ),
         ],
       ),
-      body: filteredTickets != null && filteredTickets!.isNotEmpty
+      body: filteredProducts != null && filteredProducts!.isNotEmpty
           ? ListView.builder(
-              itemCount: filteredTickets!.length,
+              itemCount: filteredProducts!.length,
               itemBuilder: (context, index) {
-                final ticket = filteredTickets![index];
+                final ticket = filteredProducts![index];
                 return InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChangeNotifierProvider(
-                          create: (context) => TicketDetailsViewModel(),
-                          child: TicketDetailsScreen(
-                              ticketId: ticket.id.toString(),
-                              ticketName: ticket.title ?? ""),
-                        ),
-                      ),
-                    );
+                    //Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => ChangeNotifierProvider(
+                    //       create: (context) => ProductDetailsViewModel(),
+                    //       child: ProductDetailsScreen(
+                    //           ticketId: ticket.id.toString(),
+                    //           ticketName: ticket.title ?? ""),
+                    //     ),
+                    //   ),
+                    // );
                   },
                   child: Card(
                     elevation: 4,
@@ -167,17 +164,18 @@ class _TicketsListScreenState extends State<TicketsListScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-  Text(
-    'Category: ${ticket.category?.capitalize() ?? 'N/A'}',
-    style: const TextStyle(color: Colors.blue),
-  ),
-  Text(
-    'Priority: ${ticket.availabilityStatus?.capitalize() ?? 'Unknown'}',
-    style: TextStyle(
-      color: _getAvailabilityColor(ticket.availabilityStatus),
-    ),
-  ),
-],
+                              Text(
+                                'Category: ${ticket.category?.capitalize() ?? 'N/A'}',
+                                style: const TextStyle(color: Colors.blue),
+                              ),
+                              Text(
+                                'Priority: ${ticket.availabilityStatus?.capitalize() ?? 'Unknown'}',
+                                style: TextStyle(
+                                  color: _getAvailabilityColor(
+                                      ticket.availabilityStatus),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test_project/models/loginModel/login_response.dart';
 import 'package:flutter_test_project/components/colors.dart';
 import 'package:flutter_test_project/components/text_styles.dart';
+import 'package:flutter_test_project/views/productsList.dart';
 
 class ProfilePage extends StatelessWidget {
-  final Profile profile;
+  final LoginResponse profile;
 
   const ProfilePage({super.key, required this.profile});
 
@@ -29,12 +30,11 @@ class ProfilePage extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 60,
+                backgroundImage: profile.image.isNotEmpty
+                    ? NetworkImage(profile.image)
+                    : const AssetImage('assets/images/default_avatar.png')
+                        as ImageProvider,
                 backgroundColor: Colors.blueAccent,
-                child: Text(
-                  ((profile.firstname != null && profile.firstname!.isNotEmpty) ? profile.firstname![0] : 'U') +
-                      ((profile.lastname != null && profile.lastname!.isNotEmpty) ? profile.lastname![0] : 'U'),
-                  style: TextStyle(fontSize: 40, color: Colors.white),
-                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -42,7 +42,7 @@ class ProfilePage extends StatelessWidget {
             // First Name
             _buildNonEditableTextField(
               label: 'First Name',
-              value: profile.firstname ?? "",
+              value: profile.firstName.capitalize(),
             ),
 
             const SizedBox(height: 10),
@@ -50,7 +50,7 @@ class ProfilePage extends StatelessWidget {
             // Last Name
             _buildNonEditableTextField(
               label: 'Last Name',
-              value: profile.lastname ?? "",
+              value: profile.lastName.capitalize(),
             ),
 
             const SizedBox(height: 10),
@@ -58,7 +58,7 @@ class ProfilePage extends StatelessWidget {
             // Email
             _buildNonEditableTextField(
               label: 'Email',
-              value: profile.email ?? "",
+              value: profile.email,
             ),
 
             const SizedBox(height: 10),
@@ -66,7 +66,7 @@ class ProfilePage extends StatelessWidget {
             // Phone (Optional, mock data if not available in API)
             _buildNonEditableTextField(
               label: 'Phone',
-              value: profile.type == 'admin'
+              value: profile.username == 'admin'
                   ? 'N/A'
                   : 'N/A', // Adjust as per data availability
             ),
@@ -75,8 +75,8 @@ class ProfilePage extends StatelessWidget {
 
             // Type
             _buildNonEditableTextField(
-              label: 'Type',
-              value: profile.type ?? 'Unknown',
+              label: 'Gender',
+              value: profile.gender.capitalize(),
             ),
           ],
         ),

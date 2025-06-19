@@ -1,4 +1,4 @@
-import 'package:flutter_test_project/models/ticketsModel/products_response.dart';
+import 'package:flutter_test_project/models/productsModel/products_response.dart';
 
 class AppSession {
   static final AppSession _instance = AppSession._internal();

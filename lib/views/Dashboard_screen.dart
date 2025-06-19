@@ -4,11 +4,11 @@ import 'package:flutter_test_project/components/text_styles.dart';
 import 'package:flutter_test_project/models/loginModel/login_response.dart';
 import 'package:flutter_test_project/views/login_screen.dart';
 import 'package:flutter_test_project/views/profile.dart';
-import 'package:flutter_test_project/views/ticketsList.dart';
+import 'package:flutter_test_project/views/productsList.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:flutter_test_project/view_models/login_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_test_project/models/ticketsModel/appSession.dart';
+import 'package:flutter_test_project/models/productsModel/appSession.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,20 +30,6 @@ class MyApp extends StatelessWidget {
       image: 'https://example.com/mock_image.png',
       username: 'Mock User Name',
       email: 'mockuser@example.com', // Added required email argument
-      profile: Profile(
-        id: 1,
-        firstname: 'MockFirstName',
-        middlename: 'MockMiddleName',
-        lastname: 'MockLastName',
-        email: 'mockuser@example.com',
-        type: 'admin',
-        isActive: true,
-      ),
-      dashboard: Dashboard(
-        totalTicket: 120,
-        ticketOpen: 45,
-        ticketClose: 75,
-      ),
     );
 
     return MaterialApp(
@@ -69,7 +55,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       viewModel = Provider.of<LoginViewModel>(context, listen: false);
-      viewModel.getTickets(); // Fetch tickets once the widget is built
+      viewModel.getProducts(); // Fetch products once the widget is built
     });
   }
 
@@ -120,7 +106,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TicketsListScreen(category: '')),
+                      builder: (context) => ProductsListScreen(category: '')),
                 ),
               ),
               SidebarXItem(
@@ -130,7 +116,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          ProfilePage(profile: widget.loginResponse.profile!)),
+                          ProfilePage(profile: widget.loginResponse)),
                 ),
               ),
               SidebarXItem(
@@ -161,16 +147,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     'Furniture'
                   ];
                   final List<int> counts = labels.map((label) {
-                    return AppSession().getProducts()
-                            ?.where((product) => product.category == label)
-                            .length ?? 0;
+                    return AppSession().getProducts()?.where((product) => product.category?.toLowerCase() == label.toLowerCase())
+                           .length ?? 0;
                   }).toList();
                   return InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TicketsListScreen(category: labels[index]),
+                          builder: (context) => ProductsListScreen(category: labels[index]),
                         ),
                       );
                     },

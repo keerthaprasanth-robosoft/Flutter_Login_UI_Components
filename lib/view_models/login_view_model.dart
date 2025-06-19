@@ -3,8 +3,8 @@ import 'package:flutter_test_project/components/api_client.dart';
 import 'package:flutter_test_project/common/SharedPrefsHelper.dart';
 import 'package:flutter_test_project/components/api_service.dart';
 import 'package:flutter_test_project/models/loginModel/login_response.dart';
-import 'package:flutter_test_project/models/ticketsModel/products_response.dart';
-import 'package:flutter_test_project/models/ticketsModel/appSession.dart';
+import 'package:flutter_test_project/models/productsModel/products_response.dart';
+import 'package:flutter_test_project/models/productsModel/appSession.dart';
 
 class LoginViewModel with ChangeNotifier {
   String? _errorMessage; // Stores error messages
@@ -15,24 +15,24 @@ class LoginViewModel with ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get isLoggedIn => _isLoggedIn;
 
-  /// Tickets List
-  Future<void> getTickets() async {
+  /// Products List
+  Future<void> getProducts() async {
     _setLoading(true); // Update loading state
     try {
       // Call the API and get the parsed JSON response
       final response = await ApiService.get(ApiClient.ticketsListEndpoint);
 
-      // Parse the response into TicketsResponse
+      // Parse the response into ProductsResponse
       final ProductListResponse ticketsResponse =
           ProductListResponse.fromJson(response);
 
-      // Store the tickets in the AppSession
+      // Store the products in the AppSession
       AppSession().setProductResponse(ticketsResponse);
 
-      print('Tickets saved: ${AppSession().getProducts()?.length}');
+      print('Products saved: ${AppSession().getProducts()?.length}');
     } catch (e) {
-      print('Failed to fetch tickets: $e');
-      _setError('Failed to fetch tickets: $e');
+      print('Failed to fetch products: $e');
+      _setError('Failed to fetch products: $e');
     } finally {
       _setLoading(false); // Reset loading state
     }

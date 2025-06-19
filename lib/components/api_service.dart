@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter_test_project/common/SharedPrefsHelper.dart';
 import 'package:http/http.dart' as http;
 import 'api_client.dart';
