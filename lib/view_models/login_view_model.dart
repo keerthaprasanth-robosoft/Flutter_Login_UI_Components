@@ -20,14 +20,14 @@ class LoginViewModel with ChangeNotifier {
     _setLoading(true); // Update loading state
     try {
       // Call the API and get the parsed JSON response
-      final response = await ApiService.get(ApiClient.ticketsListEndpoint);
+      final response = await ApiService.get(ApiClient.productsListEndpoint);
 
       // Parse the response into ProductsResponse
-      final ProductListResponse ticketsResponse =
+      final ProductListResponse productsResponse =
           ProductListResponse.fromJson(response);
 
       // Store the products in the AppSession
-      AppSession().setProductResponse(ticketsResponse);
+      AppSession().setProductResponse(productsResponse);
 
       print('Products saved: ${AppSession().getProducts()?.length}');
     } catch (e) {

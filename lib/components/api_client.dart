@@ -6,8 +6,8 @@ class ApiClient {
 
   // Define all endpoints here
   static const String loginEndpoint = '/auth/login';
-  static const String ticketsListEndpoint = '/products';
-  static const String ticketsDetailsEndpoint = '/users';
+  static const String productsListEndpoint = '/products';
+  static const String productsDetailsEndpoint = '/users';
 
   // Token storage
   static String? _authToken;

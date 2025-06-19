@@ -3,6 +3,7 @@ import 'package:flutter_test_project/models/productsModel/appSession.dart';
 import 'package:flutter_test_project/models/productsModel/products_response.dart';
 import 'package:flutter_test_project/components/colors.dart';
 import 'package:flutter_test_project/components/text_styles.dart';
+import 'package:flutter_test_project/views/product_details_screen.dart';
 
 class ProductsListScreen extends StatefulWidget {
   final String category;
@@ -26,8 +27,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
     products = AppSession().getProducts();
     if (widget.category != '') {
       products = products!
-          .where((ticket) =>
-              ticket.category?.toLowerCase() == widget.category.toLowerCase())
+          .where((product) =>
+              product.category?.toLowerCase() == widget.category.toLowerCase())
           .toList();
       filteredProducts = products;
     } else {
@@ -43,7 +44,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         filteredProducts = products;
       } else {
         filteredProducts = products
-            ?.where((ticket) => ticket.availabilityStatus == priority)
+            ?.where((product) => product.availabilityStatus == priority)
             .toList();
       }
     });
@@ -122,20 +123,15 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
           ? ListView.builder(
               itemCount: filteredProducts!.length,
               itemBuilder: (context, index) {
-                final ticket = filteredProducts![index];
+                final product = filteredProducts![index];
                 return InkWell(
                   onTap: () {
-                    //Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => ChangeNotifierProvider(
-                    //       create: (context) => ProductDetailsViewModel(),
-                    //       child: ProductDetailsScreen(
-                    //           ticketId: ticket.id.toString(),
-                    //           ticketName: ticket.title ?? ""),
-                    //     ),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductDetailsScreen(product: product),
+                      ),
+                    );
                   },
                   child: Card(
                     elevation: 4,
@@ -146,16 +142,16 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(ticket.title ?? "",
+                          Text(product.title ?? "",
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
-                          Text(ticket.brand ?? "",
+                          Text(product.brand ?? "",
                               style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w500)),
                           const SizedBox(height: 8),
                           Text(
-                            _stripHtml(ticket.description ?? ""),
+                            _stripHtml(product.description ?? ""),
                             style: const TextStyle(color: Colors.grey),
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
@@ -165,14 +161,14 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Category: ${ticket.category?.capitalize() ?? 'N/A'}',
+                                'Category: ${product.category?.capitalize() ?? 'N/A'}',
                                 style: const TextStyle(color: Colors.blue),
                               ),
                               Text(
-                                'Priority: ${ticket.availabilityStatus?.capitalize() ?? 'Unknown'}',
+                                'Priority: ${product.availabilityStatus?.capitalize() ?? 'Unknown'}',
                                 style: TextStyle(
                                   color: _getAvailabilityColor(
-                                      ticket.availabilityStatus),
+                                      product.availabilityStatus),
                                 ),
                               ),
                             ],

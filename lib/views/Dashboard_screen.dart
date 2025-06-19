@@ -146,10 +146,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     'Groceries',
                     'Furniture'
                   ];
-                  final List<int> counts = labels.map((label) {
-                    return AppSession().getProducts()?.where((product) => product.category?.toLowerCase() == label.toLowerCase())
-                           .length ?? 0;
-                  }).toList();
+                    // Move counts calculation outside of itemBuilder for efficiency
+                    final List<int> counts = [
+                    AppSession().getProducts()?.where((product) => product.category?.toLowerCase() == 'fragrances').length ?? 0,
+                    AppSession().getProducts()?.where((product) => product.category?.toLowerCase() == 'beauty').length ?? 0,
+                    AppSession().getProducts()?.where((product) => product.category?.toLowerCase() == 'groceries').length ?? 0,
+                    AppSession().getProducts()?.where((product) => product.category?.toLowerCase() == 'furniture').length ?? 0,
+                    ];
                   return InkWell(
                     onTap: () {
                       Navigator.push(
