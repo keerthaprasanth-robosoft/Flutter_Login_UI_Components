@@ -1,20 +1,64 @@
-<<<<<<< HEAD
-# Flutter_Login_UI_Components
-=======
-# flutter_test_project
+# 🧩 Flutter Login & Product App
 
-A new Flutter project.
+This is my **first full Flutter application**, built using **Dart**. The app demonstrates the core functionality of a typical e-commerce or product-based app, including:
 
-## Getting Started
+- User Login
+- Logout
+- Dashboard
+- Product Listing with Filter
+- Product Details View
+- Clean and Responsive UI with Basic UI Elements
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 🔐 **Login & Logout**
+  - Authentication via API.
+  - Basic error handling for invalid login.
+- 🧭 **Dashboard**
+  - Home screen after successful login.
+- 🛍️ **Product Listing**
+  - Retrieves and displays product data.
+  - Implements simple category-based filtering.
+- 📝 **Product Details**
+  - Tapping a product opens detailed information.
+- 🎨 **UI**
+  - Clean and intuitive layout using Flutter widgets.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
->>>>>>> 2ed2740 (first commit)
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** Flutter
+- **Language:** Dart
+- **Architecture:** MVVM pattern (if applicable)
+- **State Management:** Provider (or specify what was used)
+- **HTTP:** `http` package for API requests
+
+---
+
+## 🔗 APIs Used
+
+### Login API
+
+POST https://dummyjson.com/auth/login
+
+Sample Credentials
+
+Username: emilys
+Password: emilyspass
+
+### Users API
+GET https://dummyjson.com/users
+
+### Products API
+GET https://dummyjson.com/products
+
+## 📹 **App Demo**
+
+📽️ 
+
+## 🙌 **Acknowledgments**
+https://dummyjson.com/ — for providing free mock APIs.
+
